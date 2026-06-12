@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OnePixel — Place your pixel, leave your mark</title>
+  <meta name="description" content="10 000 pixels. 0,50€ chacun. Place le tien et laisse ta trace pour toujours." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="logo">ONE<span>PIXEL</span></div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
+        <span>/</span>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+    <div class="hero-content">
+      <p class="eyebrow" data-fr="100 × 100 pixels — pour toujours" data-en="100 × 100 pixels — forever">100 × 100 pixels — pour toujours</p>
+      <h1 data-fr="Pose ton pixel.<br>Laisse ta trace." data-en="Place your pixel.<br>Leave your mark.">Pose ton pixel.<br>Laisse ta trace.</h1>
+      <p class="hero-sub" data-fr="10 000 pixels disponibles. Chaque pixel est unique, permanent, et t'appartient." data-en="10,000 pixels available. Each pixel is unique, permanent, and yours.">10 000 pixels disponibles. Chaque pixel est unique, permanent, et t'appartient.</p>
+      <div class="hero-prices">
+        <div class="price-tag">
+          <span class="price-amount">0,50€</span>
+          <span class="price-label" data-fr="pixel noir" data-en="black pixel">pixel noir</span>
+        </div>
+        <div class="price-sep">+</div>
+        <div class="price-tag accent">
+          <span class="price-amount">0,50€</span>
+          <span class="price-label" data-fr="pour choisir ta couleur" data-en="to pick your color">pour choisir ta couleur</span>
+        </div>
+      </div>
+      <a href="#canvas-section" class="btn-hero" data-fr="Voir la grille →" data-en="See the grid →">Voir la grille →</a>
+    </div>
+
+    <!-- Live stats bar -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-num" id="stat-sold">0</span>
+        <span class="stat-lbl" data-fr="pixels posés" data-en="pixels placed">pixels posés</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num" id="stat-free">10 000</span>
+        <span class="stat-lbl" data-fr="encore libres" data-en="still free">encore libres</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num" id="stat-rev">0,00€</span>
+        <span class="stat-lbl" data-fr="récoltés" data-en="raised">récoltés</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="progress-wrap">
+          <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+        </div>
+        <span class="stat-lbl" id="stat-pct">0% <span data-fr="rempli" data-en="full">rempli</span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CANVAS SECTION -->
+  <section id="canvas-section" class="canvas-section">
+    <div class="canvas-layout">
+
+      <!-- Grid -->
+      <div class="grid-wrap">
+        <div class="grid-label" data-fr="Survole → Clique → Pose" data-en="Hover → Click → Place">Survole → Clique → Pose</div>
+        <canvas id="pixel-canvas" width="500" height="500"></canvas>
+        <p class="grid-hint" id="grid-hint" data-fr="Clique sur un pixel libre pour le sélectionner" data-en="Click a free pixel to select it">Clique sur un pixel libre pour le sélectionner</p>
+      </div>
+
+      <!-- Panel -->
+      <div class="panel">
+        <h2 class="panel-title" data-fr="Pose ton pixel" data-en="Place your pixel">Pose ton pixel</h2>
+
+        <div class="option-group">
+          <div class="option" id="opt-black" onclick="selectOption('black')">
+            <div class="option-left">
+              <div class="option-swatch" style="background:#111;"></div>
+              <div>
+                <div class="option-name" data-fr="Pixel noir" data-en="Black pixel">Pixel noir</div>
+                <div class="option-desc" data-fr="Simple, discret, permanent" data-en="Simple, discreet, permanent">Simple, discret, permanent</div>
+              </div>
+            </div>
+            <div class="option-price">0,50€</div>
+          </div>
+
+          <div class="option" id="opt-color" onclick="selectOption('color')">
+            <div class="option-left">
+              <div class="option-swatch rainbow"></div>
+              <div>
+                <div class="option-name" data-fr="Pixel coloré" data-en="Colored pixel">Pixel coloré</div>
+                <div class="option-desc" data-fr="Choisis ta couleur exacte" data-en="Pick your exact color">Choisis ta couleur exacte</div>
+              </div>
+            </div>
+            <div class="option-price">1,00€</div>
+          </div>
+        </div>
+
+        <!-- Color picker (shown only for color option) -->
+        <div class="color-picker-wrap" id="color-picker-wrap">
+          <p class="picker-label" data-fr="Ta couleur :" data-en="Your color:">Ta couleur :</p>
+          <div class="presets" id="presets"></div>
+          <div class="custom-row">
+            <input type="color" id="color-input" value="#378ADD" />
+            <span class="custom-label" data-fr="Couleur personnalisée" data-en="Custom color">Couleur personnalisée</span>
+          </div>
+          <div class="color-preview-row">
+            <div class="color-preview-box" id="color-preview"></div>
+            <span class="color-hex" id="color-hex">#378ADD</span>
+          </div>
+        </div>
+
+        <!-- Selected pixel info -->
+        <div class="selected-info" id="selected-info">
+          <span class="selected-dot"></span>
+          <span id="selected-text" data-fr="Aucun pixel sélectionné" data-en="No pixel selected">Aucun pixel sélectionné</span>
+        </div>
+
+        <!-- CTA button -->
+        <button class="btn-place" id="btn-place" onclick="startPayment()" disabled>
+          <span id="btn-label" data-fr="Sélectionne un pixel d'abord" data-en="Select a pixel first">Sélectionne un pixel d'abord</span>
+          <span class="btn-price" id="btn-price"></span>
+        </button>
+
+        <p class="secure-note">
+          🔒 <span data-fr="Paiement sécurisé via Stripe" data-en="Secure payment via Stripe">Paiement sécurisé via Stripe</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <h2 class="section-title" data-fr="Comment ça marche" data-en="How it works">Comment ça marche</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-text" data-fr="Choisis ton pixel sur la grille" data-en="Pick your pixel on the grid">Choisis ton pixel sur la grille</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-text" data-fr="Noir (0,50€) ou coloré (1,00€)" data-en="Black (0.50€) or colored (1.00€)">Noir (0,50€) ou coloré (1,00€)</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-text" data-fr="Paie en 1 clic via Stripe" data-en="Pay in 1 click via Stripe">Paie en 1 clic via Stripe</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-text" data-fr="Ton pixel est là pour toujours" data-en="Your pixel is there forever">Ton pixel est là pour toujours</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">ONE<span>PIXEL</span></div>
+    <p class="footer-text" data-fr="10 000 pixels. Une seule chance." data-en="10,000 pixels. One chance.">10 000 pixels. Une seule chance.</p>
+  </footer>
+
+  <!-- Payment modal -->
+  <div class="modal-overlay" id="modal" onclick="closeModal(event)">
+    <div class="modal-box">
+      <h3 class="modal-title" data-fr="Confirmer ton pixel" data-en="Confirm your pixel">Confirmer ton pixel</h3>
+      <div class="modal-summary" id="modal-summary"></div>
+      <button class="btn-confirm" id="btn-confirm" onclick="confirmPayment()">
+        <span data-fr="Payer et poser mon pixel" data-en="Pay and place my pixel">Payer et poser mon pixel</span>
+        <span id="modal-price"></span>
+      </button>
+      <button class="btn-cancel" onclick="closeModal()" data-fr="Annuler" data-en="Cancel">Annuler</button>
+      <p class="modal-note" data-fr="Tu seras redirigé vers Stripe pour le paiement sécurisé." data-en="You'll be redirected to Stripe for secure payment.">Tu seras redirigé vers Stripe pour le paiement sécurisé.</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
