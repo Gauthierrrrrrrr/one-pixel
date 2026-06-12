@@ -492,3 +492,19 @@ input[type="color"] {
   .steps { gap: 1.5rem; }
   .step-arrow { display: none; }
 }
+
+/* ── PACKS ── */
+.option.pack { border-color: rgba(91,79,255,0.3); }
+.option.pack:hover { border-color: rgba(91,79,255,0.6); }
+
+.badge-promo {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(29,158,117,0.2);
+  color: #1D9E75;
+  font-weight: 600;
+  margin-left: 6px;
+  vertical-align: middle;
+}
