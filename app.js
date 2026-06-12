@@ -1,6 +1,6 @@
 // ── CONFIG ── (à remplacer avec tes vraies clés)
-const SUPABASE_URL = 'REMPLACE_PAR_TON_URL_SUPABASE';
-const SUPABASE_KEY = 'REMPLACE_PAR_TA_CLE_SUPABASE';
+const SUPABASE_URL = 'https://fgbhzwpflpsbpmevgsap.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_HU12EJIg6KJEq9qgnTkkNw_3yv9MTot';
 const STRIPE_PUBLIC_KEY = 'REMPLACE_PAR_TA_CLE_STRIPE_PUBLIQUE';
 
 // ── CONSTANTES ──
