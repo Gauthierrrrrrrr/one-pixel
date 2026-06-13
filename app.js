@@ -1,7 +1,7 @@
 // ── CONFIG ── (à remplacer avec tes vraies clés)
 const SUPABASE_URL = 'https://fgbhzwpflpsbpmevgsap.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_HU12EJIg6KJEq9qgnTkkNw_3yv9MTot';
-const STRIPE_PUBLIC_KEY = 'REMPLACE_PAR_TA_CLE_STRIPE_PUBLIQUE';
+const STRIPE_PUBLIC_KEY = 'pk_live_51ThiEaHyDDxXqLayYwtgWCT80kQYdvjBO7ei5kgPDt6eiWBBPu8qvqWNfeJoXS0vmxRXwxyNNxuI6Dw4305WcVq800fBSJhxjA';
 
 // ── CONSTANTES ──
 const COLS = 1000, ROWS = 1000;
