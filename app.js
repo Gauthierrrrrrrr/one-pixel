@@ -246,18 +246,22 @@ async function confirmPayment() {
   const color = selectedOption === 'black' ? '#000000' : selectedColor;
 
   try {
-    for (const p of selectedPixels) {
-      await savePixelToSupabase(p.x, p.y, color);
-      pixelData[p.idx] = color;
-      totalSold++;
-      totalRevenue += opt.price / opt.qty;
+    const res = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        option: selectedOption,
+        x: selectedPixels[0].x,
+        y: selectedPixels[0].y,
+        color: color
+      })
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      throw new Error(data.error || 'Erreur inconnue');
     }
-    updateStats();
-    drawGrid();
-    selectedPixels = [];
-    updateSelectedInfo();
-    closeModal();
-    showSuccessToast(opt);
   } catch (err) {
     console.error('Erreur:', err);
     alert(currentLang === 'fr' ? 'Une erreur est survenue, réessaie.' : 'An error occurred, please try again.');
