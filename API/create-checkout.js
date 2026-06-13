@@ -1,17 +1,15 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { option, x, y, color } = req.body; 
+  const { option, x, y, color } = req.body;
 
   const prices = {
-    black:  50,   // 0,50€ en centimes
-    color:  100,  // 1,00€
-    pack5:  400,  // 4,00€
-    pack10: 700,  // 7,00€
+    black:  50,
+    color:  100,
+    pack5:  400,
+    pack10: 700,
   };
 
   const labels = {
@@ -22,6 +20,9 @@ export default async function handler(req, res) {
   };
 
   try {
+    const Stripe = (await import('stripe')).default;
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [{
